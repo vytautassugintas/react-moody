@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import {Router, Link} from 'react-router-dom'
 import {Message, Button, Form, Icon} from 'semantic-ui-react';
 
-class LoginWidget extends Component {
+class Login extends Component {
 
   // Temporary holding static strings here until i will find out where to store them
   loginTitle = "Login to Moody";
-  loginFormSignInButtonLabel = "Sign in".toUpperCase();
+  loginFormSignInButtonLabel = "Log in".toUpperCase();
   loginFormEmailPlaceholder = "Email";
   loginFormPasswordPlaceholder = "Password";
   loginMessageTitle = "Not a member?";
@@ -26,11 +27,11 @@ class LoginWidget extends Component {
         </Form>
         <Message>
           <Icon name='help'/>
-          {this.loginMessageTitle}&nbsp;<a href='#'>{this.loginMessageSignUp}</a>
+          {this.loginMessageTitle}&nbsp;<Link to="/sign-up">{this.loginMessageSignUp}</Link>
         </Message>
       </div>
     );
   }
 }
 
-export default LoginWidget;
+export default Login;
