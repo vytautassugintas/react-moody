@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Link} from 'react-router-dom'
+import {Router, Redirect, Link, withRouter} from 'react-router-dom'
 import {Message, Button, Form, Icon} from 'semantic-ui-react';
 
 class Login extends Component {
@@ -12,7 +12,22 @@ class Login extends Component {
   loginMessageTitle = "Not a member?";
   loginMessageSignUp = "Sign up";
 
+  state = {
+    redirectToHome: false
+  };
+
+  onLogin = () => {
+    this.setState({ redirectToHome: true })
+  };
+
   render() {
+    const { redirectToHome } = this.state;
+
+    if (redirectToHome) {
+      return (
+        <Redirect to="/home"/>
+      )
+    }
     return (
       <div>
         <h1>{this.loginTitle}</h1>
@@ -23,7 +38,7 @@ class Login extends Component {
           <Form.Field>
             <input type="password" placeholder={this.loginFormPasswordPlaceholder}/>
           </Form.Field>
-          <Button fluid size="big" color="violet" type="submit">{this.loginFormSignInButtonLabel}</Button>
+          <Button fluid size="big" color="violet" type="submit" onClick={this.onLogin}>{this.loginFormSignInButtonLabel}</Button>
         </Form>
         <Message>
           <Icon name='help'/>
