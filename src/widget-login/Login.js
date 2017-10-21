@@ -25,7 +25,7 @@ class Login extends Component {
 
     if (redirectToHome) {
       return (
-        <Redirect to="/home"/>
+        <Redirect to="/home/main"/>
       )
     }
     return (

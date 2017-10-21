@@ -1,42 +1,40 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import {Grid, Menu} from 'semantic-ui-react';
+import {BrowserRouter as Router, Route, Redirect, NavLink, Link} from 'react-router-dom'
+import {Container, Menu} from 'semantic-ui-react';
 
+export const Poll = () => <div><p>Poll</p></div>;
 export const Main = () => <div><p>Main</p></div>;
 export const Topics = () => <div><p>Topics</p></div>;
 
 class Home extends Component {
 
-  state = { activeItem: 'home' };
+  state = {activeItem: 'main'};
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, {name}) => {
+    this.setState({activeItem: name});
+  };
 
   render() {
-    const { activeItem } = this.state;
+    const {location} = this.props;
+    const {activeItem} = this.state;
 
     return (
-      <div>
-        <Menu pointing secondary>
-          <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
-          <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick} />
-          <Menu.Menu position='right'>
-            <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
-          </Menu.Menu>
-        </Menu>
-
-        <p>This is HOME</p>
-        <Grid columns={3} stackable centered padded>
-          <Grid.Column>
-            <Router>
-              <div>
-                <Route path="/home/main" exact component={Main}/>
-                <Route path="/home/topics" component={Topics}/>
-              </div>
-            </Router>
-          </Grid.Column>
-        </Grid>
-      </div>
+      <Router>
+        <div>
+          <Menu pointing secondary>
+            <Menu.Item><NavLink to="/home/main">Main</NavLink></Menu.Item>
+            <Menu.Item><NavLink to="/home/poll">Poll</NavLink></Menu.Item>
+            <Menu.Item><NavLink to="/home/topics">Topics</NavLink></Menu.Item>
+          </Menu>
+          <Container text className="padding--large">
+            <div>
+              <Route path="/home/main" component={Main}/>
+              <Route path="/home/poll" component={Poll}/>
+              <Route path="/home/topics" component={Topics}/>
+            </div>
+          </Container>
+        </div>
+      </Router>
     );
   }
 }
