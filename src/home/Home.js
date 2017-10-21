@@ -26,7 +26,7 @@ class Home extends Component {
             <Menu.Item><NavLink to="/home/poll">Poll</NavLink></Menu.Item>
             <Menu.Item><NavLink to="/home/topics">Topics</NavLink></Menu.Item>
           </Menu>
-          <Container text className="padding--large">
+          <Container text>
             <div>
               <Route path="/home/main" component={Main}/>
               <Route path="/home/poll" component={Poll}/>

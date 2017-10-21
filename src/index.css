@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
-.padding--large {
-    padding: 48px;
+.padding-top--lg {
+    padding-top: 48px;
+}
+
+.padding-top--md {
+    padding-top: 12px;
 }
