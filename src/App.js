@@ -10,17 +10,17 @@ class App extends Component {
   render() {
     return (
       <div className="App-login">
-        <Grid columns={3} stackable centered padded>
-          <Grid.Column>
-            <Router>
-              <div>
+        <Router>
+          <div>
+            <Route path="/home" component={Home}/>
+            <Grid columns={3} stackable centered padded>
+              <Grid.Column>
                 <Route path="/" exact component={Login}/>
                 <Route path="/sign-up" component={SignUp}/>
-                <Route path="/home" component={Home}/>
-              </div>
-            </Router>
-          </Grid.Column>
-        </Grid>
+              </Grid.Column>
+            </Grid>
+          </div>
+        </Router>
       </div>
     );
   }
