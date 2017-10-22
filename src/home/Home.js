@@ -22,9 +22,9 @@ class Home extends Component {
       <Router>
         <div>
           <Menu pointing secondary>
-            <Menu.Item><NavLink to="/home/main">Main</NavLink></Menu.Item>
-            <Menu.Item><NavLink to="/home/poll">Poll</NavLink></Menu.Item>
-            <Menu.Item><NavLink to="/home/topics">Topics</NavLink></Menu.Item>
+            <Menu.Item as={NavLink} to="/home/main">Main</Menu.Item>
+            <Menu.Item as={NavLink} to="/home/poll">Poll</Menu.Item>
+            <Menu.Item as={NavLink} to="/home/topics">Topics</Menu.Item>
           </Menu>
           <Container text>
             <div>
