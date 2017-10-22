@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Redirect, NavLink, Link} from 'react-router-dom'
 import {Container, Menu} from 'semantic-ui-react';
+import Main from './main/Main';
 
 export const Poll = () => <div><p>Poll</p></div>;
-export const Main = () => <div><p>Main</p></div>;
 export const Topics = () => <div><p>Topics</p></div>;
 
 class Home extends Component {
