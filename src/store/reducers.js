@@ -4,6 +4,7 @@ import {
   TOGGLE_TODO,
   SET_VISIBILITY_FILTER,
   REMOVE_TODO,
+  CREATE_POLL,
   VisibilityFilters
 } from './actions'
 const {SHOW_ALL} = VisibilityFilters;
@@ -17,21 +18,26 @@ function visibilityFilter(state = SHOW_ALL, action) {
   }
 }
 
-function todos(state = [], action) {
+let initialState = {
+  todos: [],
+  polls: []
+};
+
+function todos(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
-      return [
+      return {
         ...state,
-        {
+        todos: [...state.todos, {
           text: action.text,
           completed: false
-        }
-      ];
+        }]
+      };
     case REMOVE_TODO: {
       console.log(action);
-      return state.filter((todo, index) => {
+      return state.todos.filter((todo, index) => {
         if (index === action.index) {
-          return ;
+          return;
         }
         return todo
       });
@@ -45,6 +51,11 @@ function todos(state = [], action) {
         }
         return todo
       });
+    case CREATE_POLL:
+      return {
+        ...state,
+        polls: [...state.polls, action.poll]
+      };
     default:
       return state
   }
