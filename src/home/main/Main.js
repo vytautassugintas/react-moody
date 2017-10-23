@@ -1,100 +1,56 @@
 import React, {Component} from 'react';
-import {Button, Modal, Header, Form} from 'semantic-ui-react';
-import {createStore} from 'redux';
+import {Button, Card, Grid, Header, Form} from 'semantic-ui-react';
 import {connect} from 'react-redux'
-import {createPoll} from '../../store/actions';
-import todoApp from '../../store/reducers';
-import AddTodo from './AddTodo';
+import AddPoll from './AddPoll';
 
 class Main extends Component {
-
   constructor(props) {
     super(props);
-    this.store = createStore(todoApp);
-    this.state = {
-      polls: [...this.store.getState().todos.polls],
-      pollName: "",
-      somethingElse: ""
-    };
   }
-
-  addPoll = ({dispatch}) => {
-    dispatch(createPoll(this.state));
-    this.setState(state => ({
-          polls: [...state.polls, {
-            pollName: this.state.pollName,
-            somethingElse: this.state.somethingElse
-          }]
-        }
-      )
-    )
-  };
-
-  handleInputChange = (event) => {
-    const {value, name} = event.target;
-
-    this.setState({
-      [name]: value
-    });
-  };
 
   render() {
     const pollsList = this.props.polls.polls.map((poll, index) => (
-      <p key={index}>{poll.pollName}</p>
+      <Card key={index}>
+        <Card.Content>
+          <Card.Header>
+            {poll.name}
+          </Card.Header>
+          <Card.Meta>
+            {poll.description}
+          </Card.Meta>
+          <Card.Description>
+            Steve wants to add you to the group <strong>best friends</strong>
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <div className='ui two buttons'>
+            <Button basic color='green'>Approve</Button>
+            <Button basic color='red'>Decline</Button>
+          </div>
+        </Card.Content>
+      </Card>
     ));
-
-    console.log(this.state);
-    console.log(this.props);
 
     return (
       <div>
-        <h1>Hello Name Surname {this.state.pollName}</h1>
-        <div>
+        <h1>Hello Name Surname</h1>
+        <Grid columns='2' divided>
+          <Grid.Row>
+            <Grid.Column>
+              <AddPoll />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Card.Group>
           {pollsList}
-        </div>
-
-        <AddTodo />
-
-
-        <Modal size="tiny" dimmer='blurring' trigger={
-          <Button color='violet' content='Create poll' icon='plus' labelPosition='left'/>} closeIcon>
-          <Header content='Create new a Poll'/>
-          <Modal.Content>
-            <Form>
-              <Form.Field>
-                <input
-                  name="pollName"
-                  type="text"
-                  placeholder="Title"
-                  value={this.state.pollName}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Field>
-              <Form.Field>
-                <input
-                  name="somethingElse"
-                  type="text"
-                  placeholder="Something else"
-                  value={this.state.somethingElse}
-                  onChange={this.handleInputChange}
-                />
-              </Form.Field>
-              <Button fluid color="violet" type="submit" onClick={this.addPoll}>Create poll</Button>
-            </Form>
-          </Modal.Content>
-        </Modal>
-
+        </Card.Group>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    polls: (state.polls, state.todos)
-  };
-};
+const mapStateToProps = state => ({
+  polls: (state.polls, state.todos)
+});
 
-Main = connect(mapStateToProps)(Main);
-
-export default Main;
+export default connect(mapStateToProps)(Main);

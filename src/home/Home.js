@@ -1,17 +1,7 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Redirect, NavLink, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom'
 import {Container, Menu} from 'semantic-ui-react';
 import Main from './main/Main';
-import {createStore} from 'redux'
-
-import todoApp from '../store/reducers'
-import {
-  addTodo,
-  removeTodo,
-} from '../store/actions'
-
-
-let store = createStore(todoApp);
 
 export const Poll = () => <div><p>Poll</p></div>;
 export const Topics = () => <div><p>Topics</p></div>;
@@ -19,14 +9,6 @@ export const Topics = () => <div><p>Topics</p></div>;
 class Home extends Component {
 
   render() {
-    store.subscribe(() =>
-      console.log(store.getState())
-    );
-
-    store.dispatch(addTodo('Learn about actions'));
-    store.dispatch(addTodo('Learn about reducers'));
-    store.dispatch(addTodo('Learn about store'));
-
     return (
       <Router>
         <div>
