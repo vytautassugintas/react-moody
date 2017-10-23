@@ -7,6 +7,7 @@ class AddPoll extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       name: "",
       description: ""
     };
@@ -31,35 +32,45 @@ class AddPoll extends Component {
     });
   };
 
+  open = () => {
+    this.setState({ open: true });
+  };
+
+  close = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     return (
-      <Modal size="tiny" dimmer='blurring' trigger={
-        <Button color='violet' content='Create poll' icon='plus' labelPosition='left'/>} closeIcon>
-        <Header content='Create new a Poll'/>
-        <Modal.Content>
-          <Form>
-            <Form.Field>
-              <input
-                name="name"
-                type="text"
-                placeholder="Title"
-                value={this.state.name}
-                onChange={this.handleInputChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <input
-                name="description"
-                type="text"
-                placeholder="Something else"
-                value={this.state.description}
-                onChange={this.handleInputChange}
-              />
-            </Form.Field>
-            <Button fluid color="violet" type="submit" onClick={this.addPoll}>Create poll</Button>
-          </Form>
-        </Modal.Content>
-      </Modal>
+      <div>
+        <Button onClick={this.open} color='violet' content='Create poll' icon='plus' labelPosition='left'/>
+        <Modal open={this.state.open} onClose={this.close} size="tiny" dimmer='blurring' closeIcon>
+          <Header content='Create new a Poll'/>
+          <Modal.Content>
+            <Form>
+              <Form.Field>
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="Title"
+                  value={this.state.name}
+                  onChange={this.handleInputChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <input
+                  name="description"
+                  type="text"
+                  placeholder="Something else"
+                  value={this.state.description}
+                  onChange={this.handleInputChange}
+                />
+              </Form.Field>
+              <Button onClick={this.addPoll} fluid color="violet" type="submit">Create poll</Button>
+            </Form>
+          </Modal.Content>
+        </Modal>
+      </div>
     );
   }
 }
