@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {Button, Modal, Header, Icon, Form, Input, TextArea} from 'semantic-ui-react';
+import {Button, Modal, Header, Form} from 'semantic-ui-react';
 import {createStore} from 'redux';
-import {createPoll, addTodo} from '../../store/actions';
+import {connect} from 'react-redux'
+import {createPoll} from '../../store/actions';
 import todoApp from '../../store/reducers';
+import AddTodo from './AddTodo';
 
 class Main extends Component {
 
   constructor(props) {
     super(props);
-
     this.store = createStore(todoApp);
-
     this.state = {
       polls: [...this.store.getState().todos.polls],
       pollName: "",
@@ -18,8 +18,8 @@ class Main extends Component {
     };
   }
 
-  addPoll = () => {
-    this.store.dispatch(createPoll(this.state));
+  addPoll = ({dispatch}) => {
+    dispatch(createPoll(this.state));
     this.setState(state => ({
           polls: [...state.polls, {
             pollName: this.state.pollName,
@@ -39,9 +39,12 @@ class Main extends Component {
   };
 
   render() {
-    const pollsList = this.state.polls.map((poll, index) => (
+    const pollsList = this.props.polls.polls.map((poll, index) => (
       <p key={index}>{poll.pollName}</p>
     ));
+
+    console.log(this.state);
+    console.log(this.props);
 
     return (
       <div>
@@ -49,6 +52,9 @@ class Main extends Component {
         <div>
           {pollsList}
         </div>
+
+        <AddTodo />
+
 
         <Modal size="tiny" dimmer='blurring' trigger={
           <Button color='violet' content='Create poll' icon='plus' labelPosition='left'/>} closeIcon>
@@ -82,5 +88,13 @@ class Main extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    polls: (state.polls, state.todos)
+  };
+};
+
+Main = connect(mapStateToProps)(Main);
 
 export default Main;
