@@ -10,8 +10,9 @@ class Main extends Component {
     super(props);
 
     this.store = createStore(todoApp);
+
     this.state = {
-      polls: [],
+      polls: [...this.store.getState().todos.polls],
       pollName: "",
       somethingElse: ""
     };
@@ -19,7 +20,14 @@ class Main extends Component {
 
   addPoll = () => {
     this.store.dispatch(createPoll(this.state));
-    this.setState({polls: this.store.getState().todos.polls});
+    this.setState(state => ({
+          polls: [...state.polls, {
+            pollName: this.state.pollName,
+            somethingElse: this.state.somethingElse
+          }]
+        }
+      )
+    )
   };
 
   handleInputChange = (event) => {
