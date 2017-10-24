@@ -12,16 +12,30 @@ class Login extends Component {
   loginFormPasswordPlaceholder = "Password";
   loginMessageTitle = "Not a member?";
   loginMessageSignUp = "Sign up";
-
-  provider = new firebase.auth.GoogleAuthProvider();
-
   state = {
     redirectToHome: false
   };
 
   onLogin = () => {
-    firebase.auth().signInWithRedirect(this.provider);
-    // this.setState({ redirectToHome: true })
+    this.setState({ redirectToHome: true })
+  };
+
+  signInWithGoogle = () => {
+    let provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider).then(() => {
+      firebase.auth().getRedirectResult().then(result => {
+        if (result.credential) {
+          const {accessToken} = result.credential;
+        }
+        const {user} = result;
+        //TODO: dispatch user here
+        if(user) {
+          this.setState({redirectToHome: true})
+        }
+      }).catch(function (error) {
+        const {code, message, email, credential} = error;
+      });
+    });
   };
 
   constructor(props) {
@@ -29,31 +43,12 @@ class Login extends Component {
     this.state = {
       user: undefined
     };
-    firebase.auth().getRedirectResult().then(result => {
-      if (result.credential) {
-        const token = result.credential.accessToken;
-      }
-      const user = result.user;
-      console.log(result);
-    }).catch(function (error) {
-      const {code, message, email, credential} = error;
-      console.log(error);
-    });
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({user: user});
-        console.log(user);
-      } else {
-        // No user is signed in.
-      }
-    });
   }
 
   render() {
-    const {user, redirectToHome} = this.state;
+    const {redirectToHome} = this.state;
 
-    if (redirectToHome || user) return <Redirect to="/home/main"/>;
+    if (redirectToHome) return <Redirect to="/home/main"/>;
 
     return (
       <div>
@@ -74,7 +69,8 @@ class Login extends Component {
           {this.loginMessageTitle}&nbsp;<Link to="/sign-up">{this.loginMessageSignUp}</Link>
         </Message>
         <Divider horizontal>Or</Divider>
-        <Button fluid size="big" color='google plus'>
+        <Button fluid size="big" color='google plus'
+                onClick={this.signInWithGoogle}>
           <Icon name='google plus' /> Sign in with Google
         </Button>
       </div>

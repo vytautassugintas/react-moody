@@ -2,11 +2,21 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom'
 import {Container, Menu} from 'semantic-ui-react';
 import Main from './main/Main';
+import firebase from '../firebase';
 
 export const Poll = () => <div><p>Poll</p></div>;
 export const Topics = () => <div><p>Topics</p></div>;
 
 class Home extends Component {
+
+  logout = () => {
+    firebase.auth().signOut().then(() => {
+      console.log("Logged out");
+    }, error => {
+      console.log("Failed to logout", error);
+    });
+  };
+
 
   render() {
     return (
@@ -16,6 +26,7 @@ class Home extends Component {
             <Menu.Item as={NavLink} to="/home/main">Main</Menu.Item>
             <Menu.Item as={NavLink} to="/home/poll">Poll</Menu.Item>
             <Menu.Item as={NavLink} to="/home/topics">Topics</Menu.Item>
+            <Menu.Item onClick={this.logout}>Logout</Menu.Item>
           </Menu>
           <Container text>
             <div>
