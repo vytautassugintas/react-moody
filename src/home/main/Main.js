@@ -33,7 +33,7 @@ class Main extends Component {
 
     return (
       <div>
-        <h1>Hello Name Surname</h1>
+        <h1>Hello {this.props.user.displayName}</h1>
         <Grid columns='2' divided>
           <Grid.Row>
             <Grid.Column>
@@ -50,7 +50,8 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => ({
-  polls: (state.polls, state.todos)
+  polls: (state.polls, state.todos),
+  user: state.user
 });
 
 export default connect(mapStateToProps)(Main);

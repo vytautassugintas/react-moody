@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, NavLink, Redirect, withRouter} from 'react-router-dom'
+import {connect} from 'react-redux';
 import {Container, Menu} from 'semantic-ui-react';
 import Main from './main/Main';
 import firebase from '../firebase';
+import {setUser} from '../store/actions';
 
 export const Poll = () => <div><p>Poll</p></div>;
 export const Topics = () => <div><p>Topics</p></div>;
@@ -11,22 +13,16 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      redirectToLogin: false
-    };
   }
 
   logout = () => {
     firebase.auth().signOut().then(() => {
+      this.props.dispatch(setUser(null));
       this.props.history.push('/');
     });
   };
 
   render() {
-    const {redirectToLogin} = this.state;
-
-    if (redirectToLogin) return <Redirect to="/"/>;
-
     return (
       <Router>
         <div>
@@ -50,4 +46,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect()(Home);

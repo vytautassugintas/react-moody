@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Router, Redirect, Link, withRouter} from 'react-router-dom'
+import {connect} from 'react-redux';
 import {Message, Button, Form, Icon, Divider, Loader} from 'semantic-ui-react';
 import firebase from '../firebase';
+import {setUser} from '../store/actions';
 
 class Login extends Component {
 
@@ -22,8 +24,8 @@ class Login extends Component {
     };
   }
 
-  componentDidMount(){
-    if(this.props.user === null){
+  componentDidMount() {
+    if (this.props.user === null) {
       this.setState({isLoading: false});
     }
   }
@@ -41,21 +43,18 @@ class Login extends Component {
       .then(() => {
         firebase.auth().getRedirectResult()
           .then(result => {
-            const {user} = result;
-            if (user) {
-              this.setState({redirectToHome: true})
-            }
+            const {user = null} = result;
+            this.props.dispatch(setUser(user));
             this.setState({isLoading: false});
           })
           .catch((error) => {
-            const {code, message, email, credential} = error;
             this.setState({isLoading: false});
           })
       });
   };
 
   render() {
-    const {redirectToHome, isLoading} = this.state;
+    const {isLoading} = this.state;
 
     if (isLoading) {
       return (
@@ -93,4 +92,8 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  user: (state.user)
+});
+
+export default connect(mapStateToProps)(Login);

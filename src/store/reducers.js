@@ -5,6 +5,7 @@ import {
   SET_VISIBILITY_FILTER,
   REMOVE_TODO,
   CREATE_POLL,
+  SET_USER,
   VisibilityFilters
 } from './actions'
 const {SHOW_ALL} = VisibilityFilters;
@@ -22,6 +23,8 @@ let initialState = {
   todos: [],
   polls: []
 };
+
+let initialUserState = null;
 
 function todos(state = initialState, action) {
   switch (action.type) {
@@ -60,9 +63,20 @@ function todos(state = initialState, action) {
   }
 }
 
-const todoApp = combineReducers({
+function user(state = initialUserState, action) {
+  switch (action.type) {
+    case SET_USER:
+      return action.user;
+    default:
+      return state
+  }
+
+}
+
+const moodyStore = combineReducers({
   visibilityFilter,
-  todos
+  todos,
+  user
 });
 
-export default todoApp
+export default moodyStore;

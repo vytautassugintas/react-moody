@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
-import todoApp from './reducers'
+import moodyStore from './reducers'
 
-const store = createStore(todoApp);
+const store = createStore(moodyStore);
 
 import {
   addTodo,

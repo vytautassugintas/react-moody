@@ -4,6 +4,8 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 export const CREATE_POLL = 'CREATE_POLL';
 
+export const SET_USER = 'SET_USER';
+
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',
@@ -28,4 +30,8 @@ export function setVisibilityFilter(filter) {
 
 export function createPoll(poll) {
   return {type: CREATE_POLL, poll}
+}
+
+export function setUser(user) {
+  return {type: SET_USER, user}
 }

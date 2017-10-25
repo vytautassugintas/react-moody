@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
+import {connect} from 'react-redux';
 import {Container, Loader} from 'semantic-ui-react';
 import Login from './widget-login/Login';
 import SignUp from './widget-sign-up/SignUp';
 import Home from './home/Home';
 import firebase from './firebase';
 import PrivateRoute from './route/PrivateRoute';
+import {setUser} from './store/actions';
 import './App.css';
 
 class App extends Component {
@@ -16,10 +18,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: undefined,
-      canRedirectHome: false,
-      redirectHome: false,
-      redirectToLogin: false,
       isLoading: true
     };
   }
@@ -27,11 +25,11 @@ class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user !== null) {
-        this.setState({user: user, redirectHome: true, isLoading: false});
+        this.props.dispatch(setUser(user));
+        this.setState({ isLoading: false});
       } else {
+        this.props.dispatch(setUser(null));
         this.setState({
-          user: null,
-          redirectHome: false,
           isLoading: false
         });
       }
@@ -39,7 +37,8 @@ class App extends Component {
   }
 
   render() {
-    const {redirectHome, isLoading} = this.state;
+    const {isLoading} = this.state;
+    const redirectHome = this.props.user !== null;
 
     if (isLoading) {
       return (
@@ -52,13 +51,13 @@ class App extends Component {
         <div>
           <Router>
             <div>
-              <PrivateRoute user={this.state.user} path="/home" component={Home}/>
+              <PrivateRoute user={this.props.user} path="/home" component={Home}/>
               <Container text className="padding-top--lg">
                 <Route exact path="/" render={() => (
                   redirectHome ? (
                     <Redirect to={this.homePath}/>
                   ) : (
-                    <Login user={this.state.user}/>
+                    <Login />
                   )
                 )}/>
                 <Route path="/sign-up" component={SignUp}/>
@@ -71,4 +70,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  user: (state.user)
+});
+
+export default connect(mapStateToProps)(App);
