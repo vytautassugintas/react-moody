@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, NavLink, Redirect, withRouter} from 'react-router-dom'
+import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {Container, Menu} from 'semantic-ui-react';
 import Main from './main/Main';
@@ -10,10 +10,6 @@ export const Poll = () => <div><p>Poll</p></div>;
 export const Topics = () => <div><p>Topics</p></div>;
 
 class Home extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   logout = () => {
     firebase.auth().signOut().then(() => {

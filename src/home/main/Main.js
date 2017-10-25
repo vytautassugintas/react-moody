@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Card, Grid, Header, Form} from 'semantic-ui-react';
+import {Button, Card, Grid} from 'semantic-ui-react';
 import {connect} from 'react-redux'
 import AddPoll from './AddPoll';
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const pollsList = this.props.polls.polls.map((poll, index) => (

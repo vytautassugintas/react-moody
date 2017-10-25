@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Redirect, Link, withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {Message, Button, Form, Icon, Divider, Loader} from 'semantic-ui-react';
 import firebase from '../firebase';
@@ -19,7 +19,6 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectToHome: false,
       isLoading: false
     };
   }
@@ -31,12 +30,12 @@ class Login extends Component {
   }
 
   onLogin = () => {
-    this.setState({redirectToHome: true})
+
   };
 
   signInWithGoogle = () => {
     this.setState({isLoading: true});
-    let provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth()
       .signInWithRedirect(provider)
@@ -92,8 +91,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: (state.user)
-});
-
-export default connect(mapStateToProps)(Login);
+export default connect()(Login);

@@ -38,10 +38,7 @@ function todos(state = initialState, action) {
       };
     case REMOVE_TODO: {
       return state.todos.filter((todo, index) => {
-        if (index === action.index) {
-          return;
-        }
-        return todo
+        return index !== action.index;
       });
     }
     case TOGGLE_TODO:

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {Message, Button, Form, Icon} from 'semantic-ui-react';
 
 class SignUp extends Component {

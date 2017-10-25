@@ -26,13 +26,10 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user !== null) {
         this.props.dispatch(setUser(user));
-        this.setState({ isLoading: false});
       } else {
         this.props.dispatch(setUser(null));
-        this.setState({
-          isLoading: false
-        });
       }
+      this.setState({isLoading: false});
     });
   }
 
