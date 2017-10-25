@@ -18,12 +18,12 @@ class Login extends Component {
     super(props);
     this.state = {
       redirectToHome: false,
-      isLoading: true
+      isLoading: false
     };
   }
 
   componentDidMount(){
-    if(this.props.user === 'NO_USER'){
+    if(this.props.user === null){
       this.setState({isLoading: false});
     }
   }
@@ -54,14 +54,8 @@ class Login extends Component {
       });
   };
 
-  componentWillReceiveProps(nextProps) {
-
-  }
-
   render() {
     const {redirectToHome, isLoading} = this.state;
-
-    if (redirectToHome) return <Redirect to="/home/main"/>;
 
     if (isLoading) {
       return (

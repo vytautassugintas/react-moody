@@ -34,7 +34,6 @@ function todos(state = initialState, action) {
         }]
       };
     case REMOVE_TODO: {
-      console.log(action);
       return state.todos.filter((todo, index) => {
         if (index === action.index) {
           return;
