@@ -26,8 +26,9 @@ class Home extends Component {
             <Menu.Item as={NavLink} to="/home/main">Main</Menu.Item>
             <Menu.Item as={NavLink} to="/home/poll">Poll</Menu.Item>
             <Menu.Item as={NavLink} to="/home/topics">Topics</Menu.Item>
-            <Menu.Item onClick={this.logout}>Logout</Menu.Item>
-
+            <Menu.Menu position='right'>
+              <Menu.Item onClick={this.logout}>Logout</Menu.Item>
+            </Menu.Menu>
           </Menu>
           <Container text>
             <div>
